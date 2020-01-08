@@ -13,6 +13,25 @@
             </div>
 
 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Archivo</th>
+                        <th scope="col">Descarga</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let archivo of archivos">
+                        <th scope="row">1</th>
+                        <td>{{archivo.nombre}}</td>
+                        <td> <a style="margin-left:10px;" title="Descargar el archivo" href="{{archivo.ruta}}"><i class="fa fa-paperclip"></i> Descargar archivo</a></td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+
 
 
 

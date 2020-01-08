@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { environment } from 'src/environments/environment';
+import { Archivo } from '../models/archivo';
+import { FileServiceService } from '../services/file-service.service';
 declare const gapi: any;
 
 @Component({
@@ -11,14 +14,27 @@ export class LoginComponent implements OnInit {
 
   email: string;
   auth2: any;
+  archivos: Archivo[] = [];
 
-  constructor() { }
+  constructor(public fileService: FileServiceService) { }
 
   ngOnInit() {
     this.googleInit();
+    this.getFiles();
   }
 
-  
+  getFiles() {
+    this.fileService.getFiles()
+    .subscribe((res: any) => {
+      this.archivos = res;
+
+      this.archivos.forEach(archivo => {
+        archivo.ruta = environment.url + 'files/GetFile?filename=' + archivo.nombre ;
+      });
+
+    });
+  }
+
   googleInit() {
     gapi.load('auth2', () => {
 
@@ -78,5 +94,11 @@ attachSignIn(element) {
   // this.router.navigate(['/dashboard']);
   }
 
+
+
+  getURLFile(fileName: string) {
+    const url = environment.url + 'downloadfile/getfile?filename=' + fileName ;
+    return url;
+  }
 
 }
